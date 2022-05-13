@@ -5,6 +5,8 @@
   "main": "server.ts",
   "scripts": {
     "start": "ts-node src/server.ts",
+    "migrate-up":"db-migrate up --random=false --env test",
+    "migrate-down":"db-migrate down --env test",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
     "test": "ENV=test db-migrate --env test up && jasmine-ts && db-migrate db:drop test",
     "tsc": "tsc"

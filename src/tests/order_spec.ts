@@ -14,7 +14,7 @@ describe("order Model", () => {
       expect(result).toEqual({
         id: "1",
         status: 'Active',
-        user_id: '1'
+        userId: '1'
       });
     });
 
@@ -28,13 +28,26 @@ describe("order Model", () => {
     }
     ]);
   });
-
+  it("index method should add order products", async () => {
+    const result : {} = await store.addProduct(20,"1","1");
+    
+    expect(result).toEqual([
+      {
+        id: 1,
+        name: "tea",
+        price: 10,
+        quantity: 20,
+        order_id: "1",
+        product_id: "1"
+    }
+    ]);
+  });
     it('show method should return the correct order', async () => {
       const result : {} = await store.show();
       expect(result).toEqual({
         id: 1,
-        name: "milk",
-        price: 20,
+        name: "tea",
+        price: 10,
         quantity: 20,
         order_id: "1",
         product_id: "1"

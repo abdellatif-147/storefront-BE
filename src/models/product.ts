@@ -6,7 +6,7 @@ export interface order {
 } 
     
 export class productStore{
-    async indexOrders():Promise<order[]> {
+    async indexProduct():Promise<order[]> {
         try{
             const conect = await client.connect()
             const sql = 'SELECT * FROM products';
@@ -19,7 +19,7 @@ export class productStore{
             throw new Error(`cannot get products ${err}`)
         }
     }
-    async show(id:number):Promise<order[]> {
+    async show(id:string):Promise<order[]> {
         try{
             const sql = 'SELECT * FROM products WHERE id=($1)'
             const conect = await client.connect()

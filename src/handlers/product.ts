@@ -21,7 +21,7 @@ const create = async (req: Request, res: Response) => {
 };
 const show = async (req: Request, res: Response) => {
   try {
-    const product = await store.show(parseInt(req.params.id));
+    const product = await store.show(req.params.id);
     res.json(product);
   } catch (err) {
     console.log(err);
@@ -31,7 +31,7 @@ const show = async (req: Request, res: Response) => {
 };
 const index = async (req: Request, res: Response) => {
   try {
-    const allOrders = await store.indexOrders();
+    const allOrders = await store.indexProduct();
     res.json(allOrders);
   } catch (err) {
     console.log(err);

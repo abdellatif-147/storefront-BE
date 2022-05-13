@@ -18,7 +18,7 @@ export class orderStore{
             const sql = 'SELECT * FROM orders';
             const result = await conect.query(sql)
             conect.release()             
-            return result?.rows
+            return result?.rows[0]
         }
         catch(err){
             throw new Error(`cannot get orders ${err}`)
@@ -30,7 +30,7 @@ export class orderStore{
             const conect = await client.connect()
             const result = await conect.query(sql)
             conect.release()            
-            return result?.rows
+            return result?.rows[0]
         }
         catch(err){
             console.log(err);
