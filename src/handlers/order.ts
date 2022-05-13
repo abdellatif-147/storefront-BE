@@ -1,11 +1,11 @@
 import Express, { Request, Response } from "express";
 import { orderStore } from "../models/order";
-import authenticate from "../utils/auth";
+import authenticate from "../middlewares/auth";
 
 const orderRoute = (app: Express.Application) => {
-  app.get("/orders", authenticate, index);
-  app.get("/orders/:id", authenticate, show);
   app.post("/orders", authenticate, create);
+  app.get("/orders/:id", authenticate, show);
+  app.get("/orders", authenticate, index);
   // add product
   app.post("/orders/:id/products", authenticate, addProduct);
 };
@@ -44,8 +44,8 @@ const index = async (req: Request, res: Response) => {
 
 // ... other methods
 const addProduct = async (req: Request, res: Response) => {
-  const orderId: string = req.params.id;
-  const productId: string = req.body.productId;
+  const orderId: number = parseInt(req.params.id);
+  const productId: number = req.body.productId;
   const quantity: number = parseInt(req.body.quantity);
 
   try {

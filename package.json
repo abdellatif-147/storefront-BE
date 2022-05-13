@@ -5,10 +5,11 @@
   "main": "server.ts",
   "scripts": {
     "start": "ts-node src/server.ts",
-    "migrate-up":"db-migrate up --random=false --env test",
-    "migrate-down":"db-migrate down --env test",
+    "build": "npx tsc",
+    "test": "db-migrate --env test up && jasmine-ts --random=false && npm run migrate:reset",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
-    "test": "db-migrate --env test up && jasmine-ts --random=false && db-migrate db:drop test",
+    "migrate-up":"db-migrate up --env test",
+    "migrate:reset": "db-migrate reset",
     "tsc": "tsc"
   },
   "author": "Udacity",

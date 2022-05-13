@@ -1,13 +1,13 @@
 import Express, { Request, Response } from "express";
 import { productStore } from "../models/product";
 import app from "../server";
-import authenticate from "../utils/auth";
+import authenticate from "../middlewares/auth";
 const store = new productStore();
 
 const productRoute = (app: Express.Application) => {
-  app.get("/products", index);
-  app.get("/products/:id", show);
   app.post("/products", authenticate, create);
+  app.get("/products/:id", show);
+  app.get("/products", index);
 };
 
 const create = async (req: Request, res: Response) => {
@@ -21,7 +21,7 @@ const create = async (req: Request, res: Response) => {
 };
 const show = async (req: Request, res: Response) => {
   try {
-    const product = await store.show(req.params.id);
+    const product = await store.show(parseInt(req.params.id));
     res.json(product);
   } catch (err) {
     console.log(err);

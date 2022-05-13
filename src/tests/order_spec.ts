@@ -12,25 +12,25 @@ describe("order Model", () => {
         status: 'Active',
         userId: '1'
       });      
-      expect(result).toEqual({
+      expect(result).toEqual([{
         id: 1,
         status: 'Active',
         user_id: '1'
-      });
+      }]);
     });
 
   it("index method should return a list of orders", async () => {
     const result : {} = await storeOrder.indexOrders();
-    expect(result).toEqual(
+    expect(result).toEqual([
       {
         id: 1,
         status: "Active",
         user_id: "1"
     }
-    );
+  ]);
   });
   it("index method should add order products", async () => {      
-    const result : {} = await storeOrder.addProduct(20,"1","1");      
+    const result : {} = await storeOrder.addProduct(20,1,1);      
     expect(result).toEqual(
       {
         id: 1,

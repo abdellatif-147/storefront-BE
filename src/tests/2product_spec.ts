@@ -20,17 +20,17 @@ describe("product Model", () => {
 
   it("index method should return a list of product", async () => {
     const result: {} = await storeProduct.indexProduct();
-    expect(result).toEqual(
+    expect(result).toEqual([
       {
         id: 1,
         name: "tea",
         price: 10,
       },
-    );
+    ]);
   });
 
   it("show method should return the correct product", async () => {
-    const result: {} = await storeProduct.show("1");
+    const result: {} = await storeProduct.show(1);
     expect(result).toEqual({
       id: 1,
       name: "tea",

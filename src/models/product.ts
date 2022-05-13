@@ -12,14 +12,14 @@ export class productStore{
             const sql = 'SELECT * FROM products';
             const result = await conect.query(sql)
             conect.release()            
-            return result?.rows[0]
+            return result?.rows
         }
         catch(err){
             console.log(err);
             throw new Error(`cannot get products ${err}`)
         }
     }
-    async show(id:string):Promise<order[]> {
+    async show(id:number):Promise<order[]> {
         try{
             const sql = 'SELECT * FROM products WHERE id=($1)'
             const conect = await client.connect()

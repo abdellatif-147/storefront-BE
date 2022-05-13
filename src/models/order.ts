@@ -18,7 +18,7 @@ export class orderStore{
             const sql = 'SELECT * FROM orders';
             const result = await conect.query(sql)
             conect.release()             
-            return result?.rows[0]
+            return result?.rows
         }
         catch(err){
             throw new Error(`cannot get orders ${err}`)
@@ -43,14 +43,14 @@ export class orderStore{
             const conect = await client.connect()            
             const result = await conect.query(sql,[body.status, body.userId])            
             conect.release()            
-            return result?.rows[0]
+            return result?.rows
         }
         catch(err){            
             console.log(err);
             throw new Error(`cannot get orders ${err}`)
         }
     }
-    async addProduct(quantity: number, orderId: string, productId: string): Promise<Order> {
+    async addProduct(quantity: number, orderId: number, productId: number): Promise<Order> {
         try {
           const sql = 'INSERT INTO order_products (quantity, order_id, product_id) VALUES($1, $2, $3) RETURNING *'
           //@ts-ignore
