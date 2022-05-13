@@ -28,7 +28,7 @@ $ npm run migrate:reset
 ## database connection
 
 ```
-### just run DB server by pg admin or by CLI for DB data provided in ENV file
+### just run DB server by pg admin or by CLI for DB credentials provided in ENV file
 
 ## test ENV
 
