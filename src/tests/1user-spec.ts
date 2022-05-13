@@ -1,12 +1,7 @@
 import { userModel } from "../models/user";
-
-import bcrypt from "bcrypt";
 const store = new userModel();
-const pepper = process.env?.BCRYPT_PASSWORD;
-const saltRounds = process.env?.SALT_ROUND as string;
-const hash = bcrypt.hashSync("123" + pepper, parseInt(saltRounds));
 
-describe("product Model", () => {
+describe("user Model", () => {
   it("should have an signup method", () => {
     expect(store.signUp).toBeDefined();
   });
@@ -23,7 +18,7 @@ describe("product Model", () => {
       username: "abdo"
     });
   });
-  it("should have an index method", () => {
+  it("should have an login method", () => {
     expect(store.login).toBeDefined();
   });
 
@@ -36,3 +31,4 @@ describe("product Model", () => {
     );
   });
 });
+

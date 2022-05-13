@@ -43,7 +43,7 @@ export class orderStore{
             const conect = await client.connect()            
             const result = await conect.query(sql,[body.status, body.userId])            
             conect.release()            
-            return result?.rows
+            return result?.rows[0]
         }
         catch(err){            
             console.log(err);
@@ -55,12 +55,10 @@ export class orderStore{
           const sql = 'INSERT INTO order_products (quantity, order_id, product_id) VALUES($1, $2, $3) RETURNING *'
           //@ts-ignore
           const conn = await client.connect()
-    
           const result = await conn
               .query(sql, [quantity, orderId, productId])
-    
-          const order = result.rows[0]
-    
+            
+          const order = result.rows[0]            
           conn.release()
     
           return order

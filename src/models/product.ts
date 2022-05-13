@@ -12,7 +12,7 @@ export class productStore{
             const sql = 'SELECT * FROM products';
             const result = await conect.query(sql)
             conect.release()            
-            return result?.rows
+            return result?.rows[0]
         }
         catch(err){
             console.log(err);
@@ -25,7 +25,7 @@ export class productStore{
             const conect = await client.connect()
             const result = await conect.query(sql,[id])
             conect.release()            
-            return result?.rows
+            return result?.rows[0]
         }
         catch(err){
             console.log(err);
@@ -38,7 +38,7 @@ export class productStore{
             const conect = await client.connect()
             const result = await conect.query(sql,[body.name, body.price])
             conect.release()            
-            return result?.rows
+            return result?.rows[0]
         }
         catch(err){
             console.log(err);
