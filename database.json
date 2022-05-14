@@ -4,16 +4,16 @@
       "driver": "pg",
       "host": "localhost",
       "port":"5433",
-      "database": "storefront_dev",
-      "user": "postgres",
-      "password": "@zozo@1"
+      "database": {"ENV": "POSTGRES_DB"},
+      "user": {"ENV": "POSTGRES_USER"},
+      "password": {"ENV": "POSTGRES_PASSWORD"}
     },
     "test": {
         "driver": "pg",
         "host": "localhost",
         "port":"5433",
-        "database": "storefront_test",
-        "user": "postgres",
-        "password": "@zozo@1"
+        "database": {"ENV": "POSTGRES_test_DB"},
+        "user": {"ENV": "POSTGRES_USER"},
+        "password": {"ENV": "POSTGRES_PASSWORD"}
     }
   }

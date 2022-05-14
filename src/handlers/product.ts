@@ -1,18 +1,18 @@
-import Express, { Request, Response } from "express";
-import { productStore } from "../models/product";
-import app from "../server";
-import authenticate from "../middlewares/auth";
+import Express, { Request, Response } from 'express';
+import { productStore } from '../models/product';
+import authenticate from '../middlewares/auth';
 const store = new productStore();
 
 const productRoute = (app: Express.Application) => {
-  app.post("/products", authenticate, create);
-  app.get("/products/:id", show);
-  app.get("/products", index);
+  app.post('/products', authenticate, create);
+  app.get('/products/:id', show);
+  app.get('/products', index);
 };
 
 const create = async (req: Request, res: Response) => {
   try {
     const addedProduct = await store.create(req.body);
+    res.status(200)
     res.json(addedProduct);
   } catch (err) {
     res.status(400);
@@ -22,6 +22,7 @@ const create = async (req: Request, res: Response) => {
 const show = async (req: Request, res: Response) => {
   try {
     const product = await store.show(parseInt(req.params.id));
+    res.status(200)
     res.json(product);
   } catch (err) {
     console.log(err);
@@ -32,6 +33,7 @@ const show = async (req: Request, res: Response) => {
 const index = async (req: Request, res: Response) => {
   try {
     const allOrders = await store.indexProduct();
+    res.status(200)
     res.json(allOrders);
   } catch (err) {
     console.log(err);
@@ -39,4 +41,4 @@ const index = async (req: Request, res: Response) => {
     res.json(err);
   }
 };
-export default productRoute
+export default productRoute;

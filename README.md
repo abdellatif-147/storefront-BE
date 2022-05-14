@@ -6,11 +6,18 @@
 # install dependencies
 $ npm install
 
-# serve with hot reload at localhost:3000
+# server will run on url : localhost:3000
+#  server port will be : 3000
 $ npm run start
 
 # build for production and launch server
 $ npm run build
+
+# it helps developers to find coding and formatting errors
+$ npm run lint
+
+# it will fix linting errors
+$ npm run lint:fix
 
 # this command will excute db-migrate,set ENV variable and migrate:reset to run testing on endpoints to check results
 $ npm run test
@@ -28,7 +35,49 @@ $ npm run migrate:reset
 ## database connection
 
 ```
-### just run DB server by pg admin or by CLI for DB credentials provided in ENV file
+## first you need to create two databases one for dev and another for test
+
+1- CREATE DATABASE storefront_dev
+2- CREATE DATABASE storefront_test
+
+## second you need to create tables schema by npm run migrate-up or npm run test or by CLI commands  :
+
+1 - create user table :
+CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
+    firstName VARCHAR(64),
+    lastName VARCHAR(64),
+    username VARCHAR(100),
+    password_digest VARCHAR
+);
+2- create product table
+CREATE TABLE IF NOT EXISTS products (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(64) NOT NULL,
+    price integer NOT NULL
+);
+3- create order table
+CREATE TABLE IF NOT EXISTS orders (
+    id SERIAL PRIMARY KEY,
+    status VARCHAR(15),
+    user_id bigint REFERENCES users(id)
+);
+4- create order_products table
+CREATE TABLE IF NOT EXISTS order_products (
+    id SERIAL PRIMARY KEY,
+    quantity integer,
+    order_id bigint REFERENCES orders(id),
+    product_id bigint REFERENCES products(id)
+);
+
+## third you need to connect to database
+ you need to run database server by CLI or by pg admin and use these  credentials : 
+user = postgres
+password =@zozo@1
+port = 5433
+these provided in ENV file if you need check it as variables
+
+### if you need to switch them through testing you can follow this :
 
 ## test ENV
 
@@ -45,7 +94,7 @@ you need to run this command to update DB schema >>>> npm run migrate-up
 ## API Endpoints
 
 ```user
-
+## this will generate token and you need it use it with some of remaining requests
  # signUp endpoint
 method : post
 url : http://localhost:3000/signUp
@@ -65,7 +114,17 @@ body :
       "userName": "abdo",
       "password": "123",
 }
-## this will generate token and you need it use it with some of remaining requests
+
+## show all users by endpoint
+headers : Authorization = bearer + {token}
+method : get
+url :http://localhost:3000/users
+
+
+## show specific user by specific id
+headers : Authorization = bearer + {token}
+method : get
+url :http://localhost:3000/user/:id
 
 ```
 

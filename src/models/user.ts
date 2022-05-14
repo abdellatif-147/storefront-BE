@@ -1,5 +1,5 @@
-import bcrypt from "bcrypt";
-import Client from "../database";
+import bcrypt from 'bcrypt';
+import Client from '../database';
 
 export interface User {
   firstName: string;
@@ -16,7 +16,7 @@ export class userModel {
       // @ts-ignore
       const conn = await Client.connect();
       const sql =
-        "INSERT INTO users (firstName, lastName, username, password_digest) VALUES($1, $2, $3, $4) RETURNING firstName,lastName,username";
+        'INSERT INTO users (firstName, lastName, userName, password_digest) VALUES($1, $2, $3, $4) RETURNING firstName,lastName,userName';
 
       const hash = bcrypt.hashSync(u.password + pepper, parseInt(saltRounds));
       const result = await conn.query(sql, [
@@ -36,18 +36,18 @@ export class userModel {
     }
   }
 
-  async login(username: string, password: string): Promise<{} | null> {
+  async login(userName: string, password: string): Promise<{} | null> {
     try {
       const conn = await Client.connect();
       const sql =
-        "SELECT username, password_digest FROM users WHERE username=($1)";
+        'SELECT userName, password_digest FROM users WHERE userName=($1)';
 
-      const result = await conn.query(sql, [username]);
+      const result = await conn.query(sql, [userName]);
       console.log(password + pepper);
 
       if (result.rows?.length) {
         const user = result.rows[0];
-        
+
         if (bcrypt.compareSync(password + pepper, user.password_digest)) {
           delete user.password_digest;
           return user;
@@ -58,6 +58,30 @@ export class userModel {
     } catch (err) {
       console.log(err);
       throw new Error(`unable to login: ${err}`);
+    }
+  }
+  async show(id:number):Promise<User> {
+    try{
+      const sql = 'SELECT userName, firstName, lastName FROM users WHERE id=($1)';
+      const conect = await Client.connect();
+      const result = await conect.query(sql,[id]);      
+      conect.release();
+      return result.rows[0];
+    }
+    catch(err){
+      console.log(err);
+      throw new Error(`cannot get user ${err}`);
+    }
+  }
+  async indexUsers(): Promise<User[]> {
+    try {
+      const conect = await Client.connect();
+      const sql = 'SELECT username, firstname, lastname FROM users';
+      const result = await conect.query(sql);      
+      conect.release();
+      return result.rows
+    } catch (err) {
+      throw new Error(`cannot get users ${err}`);
     }
   }
 }

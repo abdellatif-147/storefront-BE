@@ -8,8 +8,10 @@
     "build": "npx tsc",
     "test": "db-migrate --env test up && jasmine-ts --random=false && npm run migrate:reset",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
-    "migrate-up":"db-migrate up --env test",
+    "migrate-up": "db-migrate up --env test",
     "migrate:reset": "db-migrate reset",
+    "lint": "eslint 'src/**/*.ts'",
+    "lint:fix": "eslint . --ext .ts --fix",
     "tsc": "tsc"
   },
   "author": "Udacity",
@@ -30,9 +32,14 @@
     "@types/jasmine": "^3.6.3",
     "@types/jsonwebtoken": "^8.5.8",
     "@types/pg": "^7.14.7",
+    "@types/supertest": "^2.0.12",
+    "@typescript-eslint/eslint-plugin": "^5.23.0",
+    "@typescript-eslint/parser": "^5.23.0",
+    "eslint": "^8.15.0",
     "jasmine": "^3.6.4",
     "jasmine-spec-reporter": "^6.0.0",
     "jasmine-ts": "^0.3.0",
+    "supertest": "^6.2.3",
     "ts-node": "^9.1.1",
     "tsc-watch": "^4.2.9"
   }
